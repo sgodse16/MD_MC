@@ -6,6 +6,32 @@
 
 import numpy as np
 
+def calculate_distance(r1, r2):
+    return np.sqrt(np.sum((r1-r2)**2))
+
+def Lennard_Jones(r):
+    r_12 = r**(-12)
+    r_6 = r**(-6)
+    return 4*(r_12 - r_6), 4*(12*r_12/r - 6*r_6/r)
+
+def calculate_force_energy(positions):
+    N = len(positions)
+    energy = 0
+    forces = np.zeros((N,N,3))
+    for i in range(N):
+        for j in range(N):
+            if i > j or i == j:
+                continue
+            R1 = positions[i]
+            R2 = positions[j]
+            r = calculate_distance(R1, R2)
+            E, f = Lennard_Jones(r) 
+            u = (R2-R1)/r
+            forces[i,j] = f*u        #Force exerted on atom i by atom j
+            forces[j,i] = -f*u       #Equal and opposite force exerted on atom j by atom i
+            energy += E
+    return energy, np.sum(forces, axis=0) #sum up the forces on atoms
+
 def calculate_kinetic_energy(v):
     return np.sum(0.5*v**2)
 
