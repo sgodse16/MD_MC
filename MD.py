@@ -6,6 +6,8 @@
 
 import numpy as np
 
+def calculate_kinetic_energy(v):
+    return np.sum(0.5*v**2)
 
 def update_velocity(v, F, t_step):
     return v + t_step*F
