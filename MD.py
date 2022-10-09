@@ -6,6 +6,17 @@
 
 import numpy as np
 
+def write_xyz(positions, filename):
+    n = len(positions[0])
+    t_steps = len(positions)
+    with open(filename, 'w') as f:
+        for i in range(t_steps):
+            f.write(f'{n}\n')
+            f.write(f'"Lattice 4.0 4.0 4.0"\n')
+            for j in range(n):
+                f.write('Ar %2.4f %2.4f %2.4f \n' % (positions[i,j,0], positions[i,j,1], positions[i,j,2]))
+    return
+
 def calculate_distance(r1, r2):
     return np.sqrt(np.sum((r1-r2)**2))
 
