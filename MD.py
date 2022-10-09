@@ -5,7 +5,9 @@
 
 
 import numpy as np
+import numba as nb
 
+@nb.njit
 def calculate_distance(r1, r2):
     return np.sqrt(np.sum((r1-r2)**2))
 
